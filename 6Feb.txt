@@ -1,0 +1,4 @@
+Q. Emps who work on every 10 hr projects
+
+A. select distinct ecode from work w where not exists (select prjnum from project p where not exists (select ecode from work w2 where w2.ecode = w.ecode and w2.prjnum = p.prjnum and
+   w2.hours = 10));
