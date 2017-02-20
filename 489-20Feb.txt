@@ -1,0 +1,19 @@
+1. select avg(basicsalary) from employee group by dcode having count(ecode) = (select max(count(ecode)) from employee group by dcode);
+
+2. select ename from employee where ecode = (select managerid from department where budget = (select max(budget) from department));
+
+3. select ename from employee e where e.address NOT IN ( select dlocation from department d where d.dcode = e.dcode UNION select prjlocation from project 
+
+p where p.dcode = e.dcode);
+
+4. select distinct ecode from work w1, project p1 where w1.prjnum = p1.prjnum AND 2 <= (select count(p2.prjnum) from work w2, project p2 where w2.prjnum = 
+
+p2.prjnum AND w1.ecode = w2.ecode AND p1.dcode != p2.dcode);
+
+5.select e1.ename AS employee, e2.ename AS manager from employee e1, employee e2, department d where d.dcode = e2.dcode AND e1.dcode = d.dcode AND 
+
+e2.ecode = d.managerid AND d.budget = (select max(budget) from department);
+
+6.select distinct prjname, dcode from project p1, work w1 where w1.prjnum = p1.prjnum AND w1.ecode IN (select ecode from employee e1 where e1.basicsalary 
+
+> (select AVG(basicsalary) from employee e2 group by dcode having e2.dcode = e1.dcode));
